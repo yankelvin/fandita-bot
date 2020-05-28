@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import DialogflowService from '../services/DialogflowService';
 import WebhookInterface from '../interfaces/WebhookInterface';
 
 class KommunicateController {
@@ -9,9 +10,9 @@ class KommunicateController {
     public async Post(req: Request, res: Response): Promise<Response> {
         const data: WebhookInterface = req.body;
 
-        console.log(data);
+        const response = await DialogflowService.SendIntent(data.message);
 
-        return res.status(200).json([{message: 'mensagem de teste'}]);
+        return res.status(200).json([{message: response}]);
     }
 }
 
